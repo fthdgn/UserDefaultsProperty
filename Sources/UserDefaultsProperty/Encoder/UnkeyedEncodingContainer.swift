@@ -17,7 +17,7 @@ struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
         return nextCodingKey
     }
     
-    private struct IndexedCodingKey: CodingKey {
+    struct IndexedCodingKey: CodingKey {
         let intValue: Int?
         let stringValue: String
         

@@ -22,7 +22,7 @@ class UserDefaultsEncoderData {
     
     private func updateData(data: Any?, key codingKey: [CodingKey], value: Any?) -> Any? {
         if let firstCodingKey = codingKey.first {
-            if let intKey = firstCodingKey.intValue {
+            if let intKey = (firstCodingKey as? _UnkeyedEncodingContainer.IndexedCodingKey)?.intValue {
                 let array: NSMutableArray = data as? NSMutableArray ?? .init()
                 let currentElement = array.count > intKey ? array.object(at: intKey) : nil
                 let updatedElement = updateData(data: currentElement, key: .init(codingKey[1...]), value: value)
