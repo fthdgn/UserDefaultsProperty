@@ -2,8 +2,9 @@
 
 ```swift
 import Foundation
+import UserDefaultsProperty
 
-class Keychain: UserDefaultsProvider {
+class MyUserDefaults: UserDefaultsProvider {
     let userDefaults = UserDefaults(suiteName: "custom")!
     
     @UserDefaultsProperty(key: "stringProperty")
@@ -16,8 +17,9 @@ class Keychain: UserDefaultsProvider {
 
 ```swift
 import Foundation
+import UserDefaultsProperty
 
-class Keychain: UserDefaultsProvider, UserDefaultsCacheProvider {
+class MyUserDefaults: UserDefaultsProvider, UserDefaultsCacheProvider {
     let userDefaults = UserDefaults(suiteName: "custom")!
     let cache = UserDefaultsPropertyCache()
     
