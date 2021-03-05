@@ -25,7 +25,7 @@ final class StringKeyDictionaryTests: XCTestCase {
         XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
     }
     
-    func testDateDictionary(){
+    func testDateDictionary() {
         UserDefaults.standard.removePersistentDomain(forName: "testDateDictionary")
         class MyDefaults: UserDefaultsProvider {
             var userDefaults = UserDefaults(suiteName: "testDateDictionary")!

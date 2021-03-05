@@ -18,7 +18,7 @@ final class OtherKeyDictionaryTests: XCTestCase {
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
-        XCTAssertEqual(convertArrayToDictionary(myDefaults.userDefaults.value(forKey: "property") as! NSArray), value)
+        XCTAssertEqual(self.convertArrayToDictionary(myDefaults.userDefaults.value(forKey: "property") as! NSArray), value)
         
         myDefaults.property = nil
         XCTAssertEqual(myDefaults.property, nil)

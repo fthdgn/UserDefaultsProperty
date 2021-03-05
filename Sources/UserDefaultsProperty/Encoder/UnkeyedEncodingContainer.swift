@@ -13,7 +13,7 @@ struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     
     private mutating func nextIndexedKey() -> CodingKey {
         let nextCodingKey = IndexedCodingKey(intValue: count)!
-        count += 1
+        self.count += 1
         return nextCodingKey
     }
     
@@ -33,81 +33,81 @@ struct _UnkeyedEncodingContainer: UnkeyedEncodingContainer {
     
     mutating func encode<T>(_ value: T) throws where T: Encodable {
         if T.self is UserDefaultsNative.Type {
-            data.encode(key: codingPath + [nextIndexedKey()], value: value)
+            self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
         } else {
-            try value.encode(to: _Encoder(to: data, codingPath: codingPath + [nextIndexedKey()]))
+            try value.encode(to: _Encoder(to: self.data, codingPath: self.codingPath + [self.nextIndexedKey()]))
         }
     }
     
     mutating func nestedContainer<NestedKey>(keyedBy keyType: NestedKey.Type) -> KeyedEncodingContainer<NestedKey> where NestedKey: CodingKey {
-        return KeyedEncodingContainer(_KeyedEncodingContainerProtocol(to: data, codingPath: codingPath + [nextIndexedKey()]))
+        return KeyedEncodingContainer(_KeyedEncodingContainerProtocol(to: self.data, codingPath: self.codingPath + [self.nextIndexedKey()]))
     }
     
     mutating func nestedUnkeyedContainer() -> UnkeyedEncodingContainer {
-        return _UnkeyedEncodingContainer(to: data, codingPath: codingPath + [nextIndexedKey()])
+        return _UnkeyedEncodingContainer(to: self.data, codingPath: self.codingPath + [self.nextIndexedKey()])
     }
     
     mutating func superEncoder() -> Encoder {
-        return _Encoder(to: data, codingPath: codingPath + [nextIndexedKey()])
+        return _Encoder(to: self.data, codingPath: self.codingPath + [self.nextIndexedKey()])
     }
     
     mutating func encode(_ value: String) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Double) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Float) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Int) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Int8) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Int16) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Int32) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Int64) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: UInt) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: UInt8) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: UInt16) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: UInt32) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: UInt64) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encode(_ value: Bool) throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: value)
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: value)
     }
     
     mutating func encodeNil() throws {
-        data.encode(key: codingPath + [nextIndexedKey()], value: NSNull())
+        self.data.encode(key: self.codingPath + [self.nextIndexedKey()], value: NSNull())
     }
 }

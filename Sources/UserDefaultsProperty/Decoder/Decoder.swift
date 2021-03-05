@@ -28,14 +28,14 @@ struct _Decoder: Decoder {
     }
     
     func container<Key>(keyedBy type: Key.Type) throws -> KeyedDecodingContainer<Key> where Key: CodingKey {
-        return .init(_KeyedDecodingContainerProtocol<Key>(from: try cast(data)))
+        return .init(_KeyedDecodingContainerProtocol<Key>(from: try cast(self.data)))
     }
     
     func unkeyedContainer() throws -> UnkeyedDecodingContainer {
-        return _UnkeyedDecodingContainer(from: try cast(data))
+        return _UnkeyedDecodingContainer(from: try cast(self.data))
     }
     
     func singleValueContainer() throws -> SingleValueDecodingContainer {
-        return _SingleValueDecodingContainer(from: data)
+        return _SingleValueDecodingContainer(from: self.data)
     }
 }
