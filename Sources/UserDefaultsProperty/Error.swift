@@ -1,5 +1,5 @@
 import Foundation
 
-extension String: LocalizedError {
-    public var errorDescription: String? { return self }
+enum UserDefaultsPropertyError: Error {
+    case cast(value: Any, type: Any)
 }
