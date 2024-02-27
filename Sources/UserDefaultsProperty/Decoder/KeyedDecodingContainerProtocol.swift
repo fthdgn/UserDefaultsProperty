@@ -15,11 +15,8 @@ struct _KeyedDecodingContainerProtocol<Key: CodingKey>: KeyedDecodingContainerPr
     }
     
     func getData<T>(forKey key: String) throws -> T {
-        if let data = data.object(forKey: key) as? T {
-            return data
-        } else {
-            throw "Cannot decode \(data.self) to \(T.self)"
-        }
+        let value = data.object(forKey: key)
+        return try cast(value)
     }
     
     func decode<T>(_ type: T.Type, forKey key: Key) throws -> T where T: Decodable {

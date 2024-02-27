@@ -1,24 +1,43 @@
-// swift-tools-version:5.2
-// The swift-tools-version declares the minimum version of Swift required to build this package.
+// swift-tools-version:5.9
 
+import CompilerPluginSupport
 import PackageDescription
 
 let package = Package(
     name: "UserDefaultsProperty",
+    platforms: [
+        .iOS(.v14),
+        .macOS(.v10_15),
+    ],
     products: [
         .library(
             name: "UserDefaultsProperty",
-            targets: ["UserDefaultsProperty"]),
+            targets: ["UserDefaultsProperty"]
+        ),
     ],
     dependencies: [
-        
+        .package(url: "https://github.com/apple/swift-syntax.git", exact: "509.0.2"),
     ],
     targets: [
         .target(
             name: "UserDefaultsProperty",
-            dependencies: []),
+            dependencies: [
+                "UserDefaultsPropertyMacros"
+            ]
+        ),
         .testTarget(
             name: "UserDefaultsPropertyTests",
-            dependencies: ["UserDefaultsProperty"]),
+            dependencies: [
+                "UserDefaultsProperty",
+                "UserDefaultsPropertyMacros",
+            ]
+        ),
+        .macro(
+            name: "UserDefaultsPropertyMacros",
+            dependencies: [
+                .product(name: "SwiftSyntaxMacros", package: "swift-syntax"),
+                .product(name: "SwiftCompilerPlugin", package: "swift-syntax"),
+            ]
+        ),
     ]
 )
