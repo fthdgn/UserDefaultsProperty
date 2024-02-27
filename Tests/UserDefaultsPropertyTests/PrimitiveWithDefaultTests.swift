@@ -1,18 +1,18 @@
 @testable import UserDefaultsProperty
 import XCTest
 
-final class PrimitiveTests: XCTestCase {
+final class PrimitiveWithDefaultTests: XCTestCase {
     func testString() {
-        UserDefaults.standard.removePersistentDomain(forName: "testString")
+        UserDefaults.standard.removePersistentDomain(forName: "testStringDefault")
         class MyDefaults: UserDefaultsProvider {
-            var userDefaults = UserDefaults(suiteName: "testString")!
+            var userDefaults = UserDefaults(suiteName: "testStringDefault")!
             
-            var property: String?
+            var property: String
             {
                 get {
                     return _uf_get(
                         forKey: "property",
-                        withFallback: nil
+                        withFallback: "default"
                     )
                 }
                 set {
@@ -26,29 +26,25 @@ final class PrimitiveTests: XCTestCase {
         let value: String = "value"
         let myDefaults = MyDefaults()
         
-        XCTAssertEqual(myDefaults.property, nil)
+        XCTAssertEqual(myDefaults.property, "default")
         XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
         XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? String, value)
-        
-        myDefaults.property = nil
-        XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testDate() {
-        UserDefaults.standard.removePersistentDomain(forName: "testDate")
+        UserDefaults.standard.removePersistentDomain(forName: "testDateDefault")
         class MyDefaults: UserDefaultsProvider {
-            var userDefaults = UserDefaults(suiteName: "testDate")!
+            var userDefaults = UserDefaults(suiteName: "testDateDefault")!
             
-            var property: Date?
+            var property: Date
             {
                 get {
                     return _uf_get(
                         forKey: "property",
-                        withFallback: nil
+                        withFallback: .distantFuture
                     )
                 }
                 set {
@@ -62,29 +58,25 @@ final class PrimitiveTests: XCTestCase {
         let value: Date = .init(timeIntervalSinceNow: 100)
         let myDefaults = MyDefaults()
         
-        XCTAssertEqual(myDefaults.property, nil)
+        XCTAssertEqual(myDefaults.property, .distantFuture)
         XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
         XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? Date, value)
-        
-        myDefaults.property = nil
-        XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testData() {
-        UserDefaults.standard.removePersistentDomain(forName: "testData")
+        UserDefaults.standard.removePersistentDomain(forName: "testDataDefault")
         class MyDefaults: UserDefaultsProvider {
-            var userDefaults = UserDefaults(suiteName: "testData")!
+            var userDefaults = UserDefaults(suiteName: "testDataDefault")!
             
-            var property: Data?
+            var property: Data
             {
                 get {
                     return _uf_get(
                         forKey: "property",
-                        withFallback: nil
+                        withFallback: .init(base64Encoded: "nDs=")!
                     )
                 }
                 set {
@@ -98,29 +90,25 @@ final class PrimitiveTests: XCTestCase {
         let value: Data = .init([0])
         let myDefaults = MyDefaults()
         
-        XCTAssertEqual(myDefaults.property, nil)
+        XCTAssertEqual(myDefaults.property, .init(base64Encoded: "nDs=")!)
         XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
         XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? Data, value)
-        
-        myDefaults.property = nil
-        XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testInt() {
-        UserDefaults.standard.removePersistentDomain(forName: "testInt")
+        UserDefaults.standard.removePersistentDomain(forName: "testIntDefault")
         class MyDefaults: UserDefaultsProvider {
-            var userDefaults = UserDefaults(suiteName: "testInt")!
+            var userDefaults = UserDefaults(suiteName: "testIntDefault")!
             
-            var property: Int?
+            var property: Int
             {
                 get {
                     return _uf_get(
                         forKey: "property",
-                        withFallback: nil
+                        withFallback: 123
                     )
                 }
                 set {
@@ -134,15 +122,11 @@ final class PrimitiveTests: XCTestCase {
         let value: Int = 50
         let myDefaults = MyDefaults()
         
-        XCTAssertEqual(myDefaults.property, nil)
+        XCTAssertEqual(myDefaults.property, 123)
         XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
         XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? Int, value)
-        
-        myDefaults.property = nil
-        XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
 }

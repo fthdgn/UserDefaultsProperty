@@ -1,10 +1,10 @@
 import Foundation
 
-func cast<T>(_ value: Any) throws -> T {
+func cast<T>(_ value: Any?) throws -> T {
     if let value = value as? T {
         return value
     } else {
-        throw "Cannot decode \(value.self) to \(T.self)"
+        throw UserDefaultsPropertyError.cast(value: value, type: T.self)
     }
 }
 
