@@ -8,7 +8,7 @@ public protocol UserDefaultsProvider {
 private var changedSubjects: [UserDefaults:PassthroughSubject<String, Never>] = [:]
 
 public extension UserDefaultsProvider {
-    var changedSubject: PassthroughSubject<String, Never> {
+    internal var changedSubject: PassthroughSubject<String, Never> {
         get {
             if let c = changedSubjects[userDefaults] {
                 return c
@@ -17,6 +17,14 @@ public extension UserDefaultsProvider {
                 changedSubjects[userDefaults] = new
                 return new
             }
+        }
+    }
+    
+    func observe<T: Codable>(_ keyPath: KeyPath<Self, UserDefaultsPropertyData<T>>, callback: @escaping (_ value: T) -> Void) -> AnyCancellable {
+        let data = self[keyPath: keyPath]
+        return changedSubject.filter({$0 == data.key}).sink { _ in
+            let value = _uf_get(forKey: data.key, withFallback: data.fallback)
+            callback(value)
         }
     }
     
