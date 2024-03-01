@@ -31,6 +31,7 @@ public extension UserDefaultsProvider {
     func remove<T: Codable>(_ keyPath: KeyPath<Self, UserDefaultsPropertyData<T>>) {
         let data = self[keyPath: keyPath]
         userDefaults.removeObject(forKey: data.key)
+        changedSubject.send(data.key)
     }
     
     func isSet<T: Codable>(_ keyPath: KeyPath<Self, UserDefaultsPropertyData<T>>) -> Bool {
