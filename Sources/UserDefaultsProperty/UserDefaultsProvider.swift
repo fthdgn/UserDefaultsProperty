@@ -28,6 +28,16 @@ public extension UserDefaultsProvider {
         }
     }
     
+    func remove<T: Codable>(_ keyPath: KeyPath<Self, UserDefaultsPropertyData<T>>) {
+        let data = self[keyPath: keyPath]
+        userDefaults.removeObject(forKey: data.key)
+    }
+    
+    func isSet<T: Codable>(_ keyPath: KeyPath<Self, UserDefaultsPropertyData<T>>) -> Bool {
+        let data = self[keyPath: keyPath]
+        return userDefaults.object(forKey: data.key) != nil
+    }
+    
     func _uf_set<T: Encodable>(value: T, forKey key: String) {
         do {
             if value as AnyObject is NSNull {
