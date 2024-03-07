@@ -17,4 +17,4 @@ jobs:
       with:
         xcode-version: 15.2
     - name: Run tests
-      run: xcodebuild test -destination 'name=iPhone 11' -list
+      run: xcodebuild test -destination 'name=iPhone 11' -scheme 'UserDefaultsProperty'
