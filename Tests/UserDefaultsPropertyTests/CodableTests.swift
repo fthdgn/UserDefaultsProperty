@@ -12,26 +12,44 @@ final class CodableTests: XCTestCase {
         class MyDefaults: UserDefaultsProvider {
             var userDefaults = UserDefaults(suiteName: "testStringCodable")!
             
-            @UserDefaultsProperty(key: "property")
             var property: Holder?
+            {
+                get {
+                    return _uf_get(
+                        forKey: "property",
+                        withFallback: nil
+                    )
+                }
+                set {
+                    _uf_set(
+                        value: newValue,
+                        forKey: "property"
+                    )
+                }
+            }
         }
-        let value: Holder = .init(single: "value",
-                                  array: ["value1", "value2"],
-                                  dictionary: ["key1": "value1", "key2": "value2"])
+        let value: Holder = .init(
+            single: "value",
+            array: ["value1", "value2"],
+            dictionary: ["key1": "value1", "key2": "value2"]
+        )
+        let valueDictionary: NSDictionary = [
+            "single": value.single,
+            "array": value.array,
+            "dictionary": value.dictionary,
+        ]
         let myDefaults = MyDefaults()
         
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "single") as! String, value.single)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "array") as! [String], value.array)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "dictionary") as! [String: String], value.dictionary)
+        XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? NSDictionary, valueDictionary)
         
         myDefaults.property = nil
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testDateCodable() {
@@ -44,26 +62,44 @@ final class CodableTests: XCTestCase {
         class MyDefaults: UserDefaultsProvider {
             var userDefaults = UserDefaults(suiteName: "testDateCodable")!
             
-            @UserDefaultsProperty(key: "property")
             var property: Holder?
+            {
+                get {
+                    return _uf_get(
+                        forKey: "property",
+                        withFallback: nil
+                    )
+                }
+                set {
+                    _uf_set(
+                        value: newValue,
+                        forKey: "property"
+                    )
+                }
+            }
         }
-        let value: Holder = .init(single: .init(timeIntervalSinceNow: 100),
-                                  array: [.init(timeIntervalSinceNow: 100), .init(timeIntervalSinceNow: 200)],
-                                  dictionary: ["key1": .init(timeIntervalSinceNow: 100), "key2": .init(timeIntervalSinceNow: 200)])
+        let value: Holder = .init(
+            single: .init(timeIntervalSinceNow: 100),
+            array: [.init(timeIntervalSinceNow: 100), .init(timeIntervalSinceNow: 200)],
+            dictionary: ["key1": .init(timeIntervalSinceNow: 100), "key2": .init(timeIntervalSinceNow: 200)]
+        )
+        let valueDictionary: NSDictionary = [
+            "single": value.single,
+            "array": value.array,
+            "dictionary": value.dictionary,
+        ]
         let myDefaults = MyDefaults()
         
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "single") as! Date, value.single)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "array") as! [Date], value.array)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "dictionary") as! [String: Date], value.dictionary)
+        XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? NSDictionary, valueDictionary)
         
         myDefaults.property = nil
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testDataCodable() {
@@ -76,26 +112,44 @@ final class CodableTests: XCTestCase {
         class MyDefaults: UserDefaultsProvider {
             var userDefaults = UserDefaults(suiteName: "testDataCodable")!
             
-            @UserDefaultsProperty(key: "property")
             var property: Holder?
+            {
+                get {
+                    return _uf_get(
+                        forKey: "property",
+                        withFallback: nil
+                    )
+                }
+                set {
+                    _uf_set(
+                        value: newValue,
+                        forKey: "property"
+                    )
+                }
+            }
         }
-        let value: Holder = .init(single: .init([1]),
-                                  array: [.init([2]), .init([4])],
-                                  dictionary: ["key1": .init([5]), "key2": .init([6])])
+        let value: Holder = .init(
+            single: .init([1]),
+            array: [.init([2]), .init([4])],
+            dictionary: ["key1": .init([5]), "key2": .init([6])]
+        )
+        let valueDictionary: NSDictionary = [
+            "single": value.single,
+            "array": value.array,
+            "dictionary": value.dictionary,
+        ]
         let myDefaults = MyDefaults()
         
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "single") as! Data, value.single)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "array") as! [Data], value.array)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "dictionary") as! [String: Data], value.dictionary)
+        XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? NSDictionary, valueDictionary)
         
         myDefaults.property = nil
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
     
     func testIntCodable() {
@@ -108,25 +162,43 @@ final class CodableTests: XCTestCase {
         class MyDefaults: UserDefaultsProvider {
             var userDefaults = UserDefaults(suiteName: "testIntCodable")!
             
-            @UserDefaultsProperty(key: "property")
             var property: Holder?
+            {
+                get {
+                    return _uf_get(
+                        forKey: "property",
+                        withFallback: nil
+                    )
+                }
+                set {
+                    _uf_set(
+                        value: newValue,
+                        forKey: "property"
+                    )
+                }
+            }
         }
-        let value: Holder = .init(single: 1,
-                                  array: [1, 2],
-                                  dictionary: ["key1": 5, "key2": 10])
+        let value: Holder = .init(
+            single: 1,
+            array: [1, 2],
+            dictionary: ["key1": 5, "key2": 10]
+        )
+        let valueDictionary: NSDictionary = [
+            "single": value.single,
+            "array": value.array,
+            "dictionary": value.dictionary,
+        ]
         let myDefaults = MyDefaults()
         
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
         
         myDefaults.property = value
         XCTAssertEqual(myDefaults.property, value)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "single") as! Int, value.single)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "array") as! [Int], value.array)
-        XCTAssertEqual((myDefaults.userDefaults.value(forKey: "property") as? NSDictionary)?.value(forKey: "dictionary") as! [String: Int], value.dictionary)
+        XCTAssertEqual(myDefaults.userDefaults.object(forKey: "property") as? NSDictionary, valueDictionary)
         
         myDefaults.property = nil
         XCTAssertEqual(myDefaults.property, nil)
-        XCTAssertTrue(myDefaults.userDefaults.value(forKey: "property") == nil)
+        XCTAssertTrue(myDefaults.userDefaults.object(forKey: "property") == nil)
     }
 }

@@ -9,11 +9,12 @@ on:
 jobs:
   build:
 
-    runs-on: macos-latest
+    runs-on: macos-14
 
     steps:
     - uses: actions/checkout@v2
-    - name: Generate xcodeproj
-      run: swift package generate-xcodeproj
+    - uses: maxim-lobanov/setup-xcode@v1
+      with:
+        xcode-version: 15.2
     - name: Run tests
-      run: xcodebuild test -destination 'name=iPhone 11' -scheme 'UserDefaultsProperty-Package'
+      run: xcodebuild test -destination 'name=iPhone 11' -scheme 'UserDefaultsProperty'
